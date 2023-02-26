@@ -2,6 +2,8 @@ const model = require("../model/blogModel");
 
 exports.CreatePost = ((req,res) => {
     let blogData = req.body;
+    let author = req.headers['Author'];
+    blogData.Author = author;
     model.create(blogData,(err,data) => {
         if (err) {
             res.status(400).json({status: "fail", data: err});
@@ -13,7 +15,8 @@ exports.CreatePost = ((req,res) => {
 })
 
 exports.ReadPost = ((req,res) => {
-    model.find({},{},(err,data) => {
+    let Email = req.headers['Email']
+    model.find({Email: Email},(err,data) => {
         if (err) {
             res.status(400).json({status: "fail", data: err});
         }
